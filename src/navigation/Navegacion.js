@@ -13,6 +13,7 @@ import IngresarScreen from '../screens/IngresarScreen'
 import EspaciosScreen from '../screens/EspaciosScreen'
 import DetalleEspacioScreen from '../screens/DetalleEspacioScreen'
 import ReservarScreen from '../screens/ReservarScreen'
+import MisReservasScreen from '../screens/MisReservasScreen'
 import PerfilScreen from '../screens/PerfilScreen'
 
 const Pila = createNativeStackNavigator()
@@ -48,6 +49,7 @@ function PestanasPrincipales() {
       })}
     >
       <Pestanas.Screen name="Espacios" component={EspaciosScreen} options={{ title: 'Espacios' }} />
+      <Pestanas.Screen name="MisReservas" component={MisReservasScreen} options={{ title: 'Mis reservas' }} />
       <Pestanas.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil' }} />
     </Pestanas.Navigator>
   )
