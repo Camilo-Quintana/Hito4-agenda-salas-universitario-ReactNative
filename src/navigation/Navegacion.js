@@ -10,6 +10,8 @@ import { useSesion } from '../context/SesionContext'
 import { Cargando } from '../components/Estados'
 import { colores } from '../theme'
 import IngresarScreen from '../screens/IngresarScreen'
+import EspaciosScreen from '../screens/EspaciosScreen'
+import DetalleEspacioScreen from '../screens/DetalleEspacioScreen'
 import PerfilScreen from '../screens/PerfilScreen'
 
 const Pila = createNativeStackNavigator()
@@ -44,6 +46,7 @@ function PestanasPrincipales() {
         ),
       })}
     >
+      <Pestanas.Screen name="Espacios" component={EspaciosScreen} options={{ title: 'Espacios' }} />
       <Pestanas.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil' }} />
     </Pestanas.Navigator>
   )
@@ -59,6 +62,7 @@ export default function Navegacion() {
         {usuario ? (
           <>
             <Pila.Screen name="Pestanas" component={PestanasPrincipales} options={{ headerShown: false }} />
+            <Pila.Screen name="DetalleEspacio" component={DetalleEspacioScreen} options={{ title: 'Espacio' }} />
           </>
         ) : (
           <Pila.Screen name="Ingresar" component={IngresarScreen} options={{ headerShown: false }} />
