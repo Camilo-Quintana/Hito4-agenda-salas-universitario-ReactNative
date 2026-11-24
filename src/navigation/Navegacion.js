@@ -13,6 +13,8 @@ import IngresarScreen from '../screens/IngresarScreen'
 import EspaciosScreen from '../screens/EspaciosScreen'
 import DetalleEspacioScreen from '../screens/DetalleEspacioScreen'
 import ReservarScreen from '../screens/ReservarScreen'
+import MisReservasScreen from '../screens/MisReservasScreen'
+import DetalleReservaScreen from '../screens/DetalleReservaScreen'
 import PerfilScreen from '../screens/PerfilScreen'
 
 const Pila = createNativeStackNavigator()
@@ -48,6 +50,7 @@ function PestanasPrincipales() {
       })}
     >
       <Pestanas.Screen name="Espacios" component={EspaciosScreen} options={{ title: 'Espacios' }} />
+      <Pestanas.Screen name="MisReservas" component={MisReservasScreen} options={{ title: 'Mis reservas' }} />
       <Pestanas.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil' }} />
     </Pestanas.Navigator>
   )
@@ -65,6 +68,7 @@ export default function Navegacion() {
             <Pila.Screen name="Pestanas" component={PestanasPrincipales} options={{ headerShown: false }} />
             <Pila.Screen name="DetalleEspacio" component={DetalleEspacioScreen} options={{ title: 'Espacio' }} />
             <Pila.Screen name="Reservar" component={ReservarScreen} options={{ title: 'Nueva reserva' }} />
+            <Pila.Screen name="DetalleReserva" component={DetalleReservaScreen} options={{ title: 'Mi reserva' }} />
           </>
         ) : (
           <Pila.Screen name="Ingresar" component={IngresarScreen} options={{ headerShown: false }} />
