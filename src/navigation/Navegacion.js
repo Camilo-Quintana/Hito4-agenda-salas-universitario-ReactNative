@@ -58,7 +58,7 @@ function PestanasPrincipales() {
 
 export default function Navegacion() {
   const { usuario, iniciando } = useSesion()
-  if (iniciando) return <Cargando texto="Abriendo ReservaUNAB..." />
+  if (iniciando) return <Cargando texto="Abriendo ReservaUNAB…" />
 
   return (
     <NavigationContainer theme={tema}>

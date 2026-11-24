@@ -9,7 +9,7 @@ import Campo from '../components/Campo'
 import { Aviso, Cargando, MensajeError } from '../components/Estados'
 import { useConsulta } from '../hooks/useConsulta'
 import { reservasApi } from '../services/reservaunabApi'
-import { colores, radio, sombra } from '../theme'
+import { colores, radio, sombra, tipografia } from '../theme'
 import { formatearBloque, formatearFechaHora, formatearFechaLarga } from '../utils/fechas'
 import { TEXTO_EVENTO, TEXTO_TEMPORAL } from '../utils/textos'
 import { confirmar } from '../utils/confirmar'
@@ -24,7 +24,7 @@ export default function DetalleReservaScreen({ route }) {
   const [enviando, setEnviando] = useState(false)
   const [mensaje, setMensaje] = useState(null) // { tipo, texto }
 
-  if (reserva.cargando) return <Cargando texto="Cargando reserva..." />
+  if (reserva.cargando) return <Cargando texto="Cargando reserva…" />
   if (reserva.error) return <MensajeError error={reserva.error} onReintentar={reserva.recargar} />
 
   const datos = reserva.datos
@@ -34,7 +34,7 @@ export default function DetalleReservaScreen({ route }) {
   function confirmarCancelacion() {
     confirmar({
       titulo: '¿Cancelar la reserva?',
-      mensaje: `${datos.espacio.nombre}, ${formatearFechaLarga(datos.fecha)}, ${datos.bloque}. El horario quedará libre para otras personas.`,
+      mensaje: `${datos.espacio.nombre}, ${formatearFechaLarga(datos.fecha)}, ${formatearBloque(datos.bloque)}. El horario quedará libre para otras personas.`,
       textoCancelar: 'No, mantener',
       textoAceptar: 'Sí, cancelar',
       alAceptar: cancelar,
@@ -93,33 +93,30 @@ export default function DetalleReservaScreen({ route }) {
           {datos.estado === 'pendiente' && <Aviso tipo="aviso">Esperando la revisión de administración.</Aviso>}
         </View>
 
-        {sePuedeCancelar && (
-          <View style={styles.tarjeta}>
-            {cancelando ? (
-              <>
-                <Text style={styles.subtitulo}>Cancelar reserva</Text>
-                <Campo
-                  etiqueta="Motivo (opcional)"
-                  value={observacion}
-                  onChangeText={setObservacion}
-                  placeholder="Ej.: Se cambió la fecha de la reunión"
-                  multiline
-                  maxLength={300}
-                  ayuda={`${observacion.length}/300 caracteres`}
-                />
-                <Boton titulo="Cancelar reserva" variante="peligro" icono="close-circle-outline" onPress={confirmarCancelacion} cargando={enviando} />
-                <Boton titulo="Volver" variante="secundario" onPress={() => setCancelando(false)} deshabilitado={enviando} />
-              </>
-            ) : (
-              <Boton titulo="Cancelar esta reserva" variante="peligroSecundario" icono="close-circle-outline" onPress={() => setCancelando(true)} />
-            )}
-          </View>
-        )}
+        {sePuedeCancelar &&
+          (cancelando ? (
+            <View style={styles.tarjeta}>
+              <Text style={styles.subtitulo}>Cancelar reserva</Text>
+              <Campo
+                etiqueta="Motivo (opcional)"
+                value={observacion}
+                onChangeText={setObservacion}
+                placeholder="Ej.: Se cambió la fecha de la reunión"
+                multiline
+                maxLength={300}
+                ayuda={`${observacion.length}/300 caracteres`}
+              />
+              <Boton titulo="Cancelar reserva" variante="peligro" icono="close-circle-outline" onPress={confirmarCancelacion} cargando={enviando} />
+              <Boton titulo="Volver" variante="secundario" onPress={() => setCancelando(false)} deshabilitado={enviando} />
+            </View>
+          ) : (
+            <Boton titulo="Cancelar esta reserva" variante="peligroSecundario" icono="close-circle-outline" onPress={() => setCancelando(true)} />
+          ))}
 
         <View style={styles.tarjeta}>
           <Text style={styles.subtitulo}>Historial de la reserva</Text>
           {historial.cargando ? (
-            <Text style={styles.suave}>Cargando historial...</Text>
+            <Text style={styles.suave}>Cargando historial…</Text>
           ) : historial.error ? (
             <Text style={styles.suave}>No se pudo cargar el historial. Desliza hacia abajo para reintentar.</Text>
           ) : historial.datos.length === 0 ? (
@@ -162,17 +159,17 @@ const styles = StyleSheet.create({
   contenido: { padding: 16, gap: 12, paddingBottom: 40 },
   tarjeta: { backgroundColor: colores.blanco, borderRadius: radio, padding: 16, gap: 10, ...sombra },
   encabezado: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  numero: { fontSize: 13, color: colores.textoSuave },
-  nombre: { fontSize: 22, fontWeight: '800', color: colores.texto },
+  numero: { ...tipografia.cuerpoChico, color: colores.textoSuave, fontVariant: ['tabular-nums'] },
+  nombre: { ...tipografia.titular, color: colores.texto },
   fila: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
-  textoFila: { fontSize: 15, color: colores.texto, flex: 1 },
-  subtitulo: { fontSize: 17, fontWeight: '700', color: colores.texto },
-  suave: { fontSize: 13, color: colores.textoSuave },
+  textoFila: { ...tipografia.cuerpo, color: colores.texto, flex: 1 },
+  subtitulo: { ...tipografia.titulo, color: colores.texto },
+  suave: { ...tipografia.cuerpoChico, color: colores.textoSuave },
   evento: { flexDirection: 'row', gap: 10 },
   linea: { alignItems: 'center', width: 14 },
   punto: { width: 12, height: 12, borderRadius: 6, backgroundColor: colores.primario, marginTop: 4 },
   trazo: { flex: 1, width: 2, backgroundColor: colores.borde, marginVertical: 2 },
   cuerpoEvento: { flex: 1, paddingBottom: 14 },
-  tituloEvento: { fontSize: 15, fontWeight: '600', color: colores.texto },
-  observacion: { fontSize: 13, color: colores.texto, fontStyle: 'italic', marginTop: 2 },
+  tituloEvento: { ...tipografia.etiqueta, fontSize: 15, color: colores.texto },
+  observacion: { ...tipografia.cuerpoChico, color: colores.texto, fontStyle: 'italic', marginTop: 2 },
 })

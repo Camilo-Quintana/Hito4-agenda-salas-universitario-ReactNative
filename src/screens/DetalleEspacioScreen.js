@@ -8,8 +8,8 @@ import { Aviso, Cargando, MensajeError } from '../components/Estados'
 import { useConsulta } from '../hooks/useConsulta'
 import { useAlVolver } from '../hooks/useAlVolver'
 import { espaciosApi } from '../services/reservaunabApi'
-import { colores, radio, sombra } from '../theme'
-import { formatearFechaLarga } from '../utils/fechas'
+import { colores, radio, sombra, tipografia } from '../theme'
+import { formatearBloque, formatearFechaLarga } from '../utils/fechas'
 import { imagenDeEspacio } from '../utils/imagenes'
 import { textoCapacidad, textoEquipo } from '../utils/textos'
 
@@ -29,7 +29,7 @@ export default function DetalleEspacioScreen({ route, navigation }) {
   // Al volver desde el formulario de reserva, el bloque reservado debe aparecer ocupado
   useAlVolver(disponibilidad.actualizarSilencioso)
 
-  if (espacio.cargando) return <Cargando texto="Cargando espacio..." />
+  if (espacio.cargando) return <Cargando texto="Cargando espacio…" />
   if (espacio.error) return <MensajeError error={espacio.error} onReintentar={espacio.recargar} />
 
   const datos = espacio.datos
@@ -54,8 +54,10 @@ export default function DetalleEspacioScreen({ route, navigation }) {
       <Image source={imagenDeEspacio(datos)} style={styles.imagen} />
 
       <View style={styles.seccion}>
-        <Text style={styles.tipo}>{datos.tipo.toUpperCase()}</Text>
-        <Text style={styles.nombre}>{datos.nombre}</Text>
+        <View>
+          <Text style={styles.nombre}>{datos.nombre}</Text>
+          <Text style={styles.suave}>{datos.tipo}</Text>
+        </View>
         <View style={styles.datos}>
           <Dato icono="business-outline" texto={datos.edificio.nombre} />
           <Dato icono="layers-outline" texto={`Piso ${datos.piso}`} />
@@ -94,7 +96,7 @@ export default function DetalleEspacioScreen({ route, navigation }) {
 
         <View style={styles.margen}>
           {disponibilidad.cargando ? (
-            <Cargando texto="Revisando horarios..." />
+            <Cargando texto="Revisando horarios…" />
           ) : disponibilidad.error ? (
             <MensajeError error={disponibilidad.error} onReintentar={disponibilidad.recargar} />
           ) : (
@@ -109,7 +111,7 @@ export default function DetalleEspacioScreen({ route, navigation }) {
                       disabled={estado !== 'libre'}
                       onPress={() => elegirBloque(bloque)}
                       accessibilityRole="button"
-                      accessibilityLabel={`${bloque}, ${estilo.etiqueta}`}
+                      accessibilityLabel={`${formatearBloque(bloque)}, ${estilo.etiqueta}`}
                       accessibilityState={{ disabled: estado !== 'libre' }}
                       style={({ pressed }) => [
                         styles.bloque,
@@ -117,7 +119,7 @@ export default function DetalleEspacioScreen({ route, navigation }) {
                         pressed && styles.bloquePresionado,
                       ]}
                     >
-                      <Text style={[styles.horaBloque, { color: estilo.texto }]}>{bloque.replace('-', ' – ')}</Text>
+                      <Text style={[styles.horaBloque, { color: estilo.texto }]}>{formatearBloque(bloque)}</Text>
                       <Text style={[styles.estadoBloque, { color: estilo.texto }]}>{estilo.etiqueta}</Text>
                     </Pressable>
                   )
@@ -148,22 +150,21 @@ const styles = StyleSheet.create({
   seccion: { backgroundColor: colores.blanco, marginHorizontal: 16, borderRadius: radio, padding: 16, gap: 10, ...sombra },
   seccionSinMargen: { paddingHorizontal: 0 },
   margen: { paddingHorizontal: 16, gap: 4 },
-  tipo: { fontSize: 12, fontWeight: '700', color: colores.acento, letterSpacing: 0.5 },
-  nombre: { fontSize: 24, fontWeight: '800', color: colores.texto, marginTop: -6 },
-  datos: { gap: 6 },
+  nombre: { ...tipografia.titular, color: colores.texto },
+  datos: { gap: 8 },
   dato: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  textoDato: { fontSize: 15, color: colores.texto, flex: 1 },
-  subtitulo: { fontSize: 17, fontWeight: '700', color: colores.texto },
-  suave: { fontSize: 14, color: colores.textoSuave },
-  ayuda: { fontSize: 13, color: colores.textoSuave, marginTop: 4, marginBottom: 8 },
+  textoDato: { ...tipografia.cuerpo, color: colores.texto, flex: 1 },
+  subtitulo: { ...tipografia.titulo, color: colores.texto },
+  suave: { ...tipografia.cuerpoChico, fontSize: 14, color: colores.textoSuave },
+  ayuda: { ...tipografia.cuerpoChico, color: colores.textoSuave, marginTop: 8, marginBottom: 10 },
   equipos: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   equipo: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: colores.primarioSuave, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999 },
-  textoEquipo: { fontSize: 13, color: colores.primarioOscuro },
+  textoEquipo: { ...tipografia.cuerpoChico, color: colores.primarioOscuro },
   grilla: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   // tres columnas: (100% - 2 espacios de 8) / 3
-  bloque: { width: '31.5%', minHeight: 56, borderRadius: radio - 4, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center', paddingVertical: 6 },
+  bloque: { width: '31.5%', minHeight: 56, borderRadius: radio - 4, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 6, paddingHorizontal: 6 },
   bloquePresionado: { opacity: 0.7 },
-  horaBloque: { fontSize: 13, fontWeight: '700' },
-  estadoBloque: { fontSize: 12 },
+  horaBloque: { ...tipografia.etiquetaChica, fontSize: 13, textAlign: 'center', fontVariant: ['tabular-nums'] },
+  estadoBloque: { ...tipografia.cuerpoChico, fontSize: 12 },
   avisoSinLibres: { marginTop: 10 },
 })

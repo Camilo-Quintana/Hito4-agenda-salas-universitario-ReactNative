@@ -8,7 +8,7 @@ import Boton from '../components/Boton'
 import EtiquetaEstado from '../components/EtiquetaEstado'
 import { Aviso } from '../components/Estados'
 import { reservasApi } from '../services/reservaunabApi'
-import { colores, radio, sombra } from '../theme'
+import { colores, radio, sombra, tipografia } from '../theme'
 import { formatearBloque, formatearFechaLarga } from '../utils/fechas'
 import { erroresDeApi, validarReserva } from '../utils/validaciones'
 import { textoCapacidad } from '../utils/textos'
@@ -111,7 +111,7 @@ function Confirmacion({ reserva, navigation }) {
   return (
     <ScrollView style={styles.pantalla} contentContainerStyle={[styles.contenido, styles.centro]}>
       <View style={[styles.icono, pendiente && styles.iconoPendiente]}>
-        <Ionicons name={pendiente ? 'hourglass-outline' : 'checkmark'} size={44} color={colores.blanco} />
+        <Ionicons name={pendiente ? 'hourglass-outline' : 'checkmark'} size={44} color={pendiente ? colores.primarioOscuro : colores.blanco} />
       </View>
       <Text style={styles.tituloConfirmacion}>{pendiente ? 'Solicitud enviada' : '¡Reserva confirmada!'}</Text>
       <Text style={styles.textoConfirmacion}>
@@ -169,23 +169,23 @@ const styles = StyleSheet.create({
   pantalla: { flex: 1, backgroundColor: colores.fondo },
   contenido: { padding: 16, gap: 14, paddingBottom: 40 },
   centro: { alignItems: 'center', paddingTop: 32 },
-  resumen: { alignSelf: 'stretch', backgroundColor: colores.blanco, borderRadius: radio, padding: 16, gap: 8, borderLeftWidth: 4, borderLeftColor: colores.acento, ...sombra },
-  resumenTitulo: { fontSize: 19, fontWeight: '700', color: colores.texto },
+  resumen: { alignSelf: 'stretch', backgroundColor: colores.blanco, borderRadius: radio, padding: 16, gap: 8, ...sombra },
+  resumenTitulo: { ...tipografia.tituloGrande, color: colores.texto, marginBottom: 2 },
   fila: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  textoFila: { fontSize: 15, color: colores.texto, textTransform: 'none' },
+  textoFila: { ...tipografia.cuerpo, color: colores.texto, flex: 1 },
   formulario: { backgroundColor: colores.blanco, borderRadius: radio, padding: 16, gap: 18, ...sombra },
   campoAsistentes: { gap: 6 },
-  etiqueta: { fontSize: 14, fontWeight: '600', color: colores.texto },
+  etiqueta: { ...tipografia.etiqueta, color: colores.texto },
   contador: { flexDirection: 'row', alignItems: 'center', gap: 20 },
   botonContador: { width: 48, height: 48, borderRadius: 24, borderWidth: 1.5, borderColor: colores.primario, alignItems: 'center', justifyContent: 'center' },
   inactivo: { opacity: 0.35 },
   presionado: { backgroundColor: colores.primarioSuave },
-  numero: { fontSize: 24, fontWeight: '700', color: colores.texto, minWidth: 40, textAlign: 'center' },
-  ayuda: { fontSize: 13, color: colores.textoSuave },
-  error: { fontSize: 13, color: colores.peligro },
+  numero: { ...tipografia.titular, fontWeight: '700', color: colores.texto, minWidth: 40, textAlign: 'center', fontVariant: ['tabular-nums'] },
+  ayuda: { ...tipografia.cuerpoChico, color: colores.textoSuave },
+  error: { ...tipografia.cuerpoChico, color: colores.peligro },
   icono: { width: 84, height: 84, borderRadius: 42, backgroundColor: colores.exito, alignItems: 'center', justifyContent: 'center' },
   iconoPendiente: { backgroundColor: colores.acento },
-  tituloConfirmacion: { fontSize: 24, fontWeight: '800', color: colores.texto },
-  textoConfirmacion: { fontSize: 15, color: colores.textoSuave, textAlign: 'center', paddingHorizontal: 12 },
+  tituloConfirmacion: { ...tipografia.titular, color: colores.texto, textAlign: 'center' },
+  textoConfirmacion: { ...tipografia.cuerpo, color: colores.textoSuave, textAlign: 'center', paddingHorizontal: 12, marginBottom: 6 },
   anchoCompleto: { alignSelf: 'stretch' },
 })

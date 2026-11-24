@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import Boton from '../components/Boton'
 import { useSesion } from '../context/SesionContext'
-import { colores, radio, sombra } from '../theme'
+import { colores, radio, sombra, tipografia } from '../theme'
 import { URL_API } from '../config'
 import { confirmar } from '../utils/confirmar'
 
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
   cabecera: { alignItems: 'center', gap: 4, paddingVertical: 12 },
   avatar: { width: 84, height: 84, borderRadius: 42, backgroundColor: colores.primario, alignItems: 'center', justifyContent: 'center', borderWidth: 3, borderColor: colores.acento },
   iniciales: { color: colores.blanco, fontSize: 30, fontWeight: '700' },
-  nombre: { fontSize: 22, fontWeight: '800', color: colores.texto, marginTop: 8 },
-  rol: { fontSize: 14, color: colores.textoSuave },
+  nombre: { ...tipografia.titular, color: colores.texto, marginTop: 8, textAlign: 'center' },
+  rol: { ...tipografia.cuerpo, color: colores.textoSuave },
   tarjeta: { backgroundColor: colores.blanco, borderRadius: radio, padding: 16, gap: 14, ...sombra },
   dato: { flexDirection: 'row', gap: 12, alignItems: 'center' },
-  etiqueta: { fontSize: 12, color: colores.textoSuave },
-  valor: { fontSize: 15, color: colores.texto },
-  nota: { fontSize: 13, color: colores.textoSuave },
+  etiqueta: { ...tipografia.cuerpoChico, fontSize: 12, color: colores.textoSuave },
+  valor: { ...tipografia.cuerpo, color: colores.texto },
+  nota: { ...tipografia.cuerpoChico, color: colores.textoSuave },
 })
