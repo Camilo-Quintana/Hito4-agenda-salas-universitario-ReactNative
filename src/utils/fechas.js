@@ -68,7 +68,7 @@ export function formatearFechaHora(valor) {
   return `${fecha.getDate()} ${MESES[fecha.getMonth()]} ${fecha.getFullYear()}, ${hora}`
 }
 
-// "08:00-09:00" -> "08:00 - 09:00"
+// "08:00-09:00" -> "08:00 – 09:00" (mismo separador en toda la app)
 export function formatearBloque(bloque) {
-  return bloque.replace('-', ' - ')
+  return bloque.replace('-', ' – ')
 }

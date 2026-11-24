@@ -1,7 +1,7 @@
 // Catálogo de espacios: búsqueda, filtros por edificio y tipo, y horarios libres del día elegido.
 // Usa GET /api/edificios y GET /api/espacios?q&tipo&edificioId&fecha
 import { useEffect, useState } from 'react'
-import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, Pressable, RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import Chip from '../components/Chip'
 import SelectorDia from '../components/SelectorDia'
@@ -11,7 +11,7 @@ import { Cargando, MensajeError, MensajeVacio } from '../components/Estados'
 import { useConsulta } from '../hooks/useConsulta'
 import { useAlVolver } from '../hooks/useAlVolver'
 import { edificiosApi, espaciosApi } from '../services/reservaunabApi'
-import { colores, radio } from '../theme'
+import { colores, radio, tipografia } from '../theme'
 import { fechaHoy, formatearFechaLarga } from '../utils/fechas'
 import { TIPOS_ESPACIO } from '../utils/textos'
 
@@ -48,7 +48,7 @@ export default function EspaciosScreen({ navigation }) {
   }
 
   function contenido() {
-    if (espacios.cargando && !espacios.datos) return <Cargando texto="Buscando espacios..." />
+    if (espacios.cargando && !espacios.datos) return <Cargando texto="Buscando espacios…" />
     if (espacios.error && !espacios.datos) return <MensajeError error={espacios.error} onReintentar={espacios.recargar} />
     return (
       <FlatList
@@ -64,7 +64,7 @@ export default function EspaciosScreen({ navigation }) {
         }
         ListHeaderComponent={
           <Text style={styles.resumen}>
-            {espacios.cargando ? 'Actualizando...' : `${espacios.datos?.length ?? 0} espacios`} · {formatearFechaLarga(fecha)}
+            {espacios.cargando ? 'Actualizando…' : `${espacios.datos?.length ?? 0} espacios`} · {formatearFechaLarga(fecha)}
           </Text>
         }
         ListEmptyComponent={
@@ -88,14 +88,18 @@ export default function EspaciosScreen({ navigation }) {
             value={texto}
             onChangeText={setTexto}
             placeholder="Buscar por nombre o equipamiento"
-            placeholderTextColor={colores.ocupado}
+            placeholderTextColor={colores.textoSuave}
+            selectionColor={colores.primarioClaro}
+            cursorColor={colores.primario}
             style={styles.inputBuscar}
             returnKeyType="search"
             autoCorrect={false}
             accessibilityLabel="Buscar espacios"
           />
           {texto.length > 0 && (
-            <Ionicons name="close-circle" size={20} color={colores.ocupado} onPress={() => setTexto('')} accessibilityLabel="Borrar búsqueda" />
+            <Pressable onPress={() => setTexto('')} accessibilityRole="button" accessibilityLabel="Borrar búsqueda" hitSlop={12} style={styles.borrar}>
+              <Ionicons name="close-circle" size={20} color={colores.textoSuave} />
+            </Pressable>
           )}
         </View>
 
@@ -140,15 +144,16 @@ const styles = StyleSheet.create({
     gap: 8,
     marginHorizontal: 16,
     paddingHorizontal: 12,
-    minHeight: 46,
+    minHeight: 48,
     borderRadius: radio,
     backgroundColor: colores.fondo,
   },
   inputBuscar: { flex: 1, fontSize: 16, color: colores.texto, paddingVertical: 8 },
   chips: { gap: 8, paddingHorizontal: 16 },
-  infoEdificio: { marginHorizontal: 16, marginTop: -4, fontSize: 13, color: colores.textoSuave },
+  borrar: { padding: 4 },
+  infoEdificio: { ...tipografia.cuerpoChico, marginHorizontal: 16, marginTop: -4, color: colores.textoSuave },
   lista: { padding: 16, paddingBottom: 32, flexGrow: 1 },
   separador: { height: 12 },
-  resumen: { fontSize: 13, color: colores.textoSuave, marginBottom: 10 },
+  resumen: { ...tipografia.cuerpoChico, color: colores.textoSuave, marginBottom: 12 },
   botonVacio: { marginTop: 8, minWidth: 180 },
 })

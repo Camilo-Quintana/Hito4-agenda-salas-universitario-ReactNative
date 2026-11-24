@@ -2,7 +2,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import EtiquetaEstado from './EtiquetaEstado'
-import { colores, radio, sombra } from '../theme'
+import { colores, radio, sombra, tipografia } from '../theme'
 import { formatearBloque, formatearFechaRelativa } from '../utils/fechas'
 
 export default function ReservaItem({ reserva, onPress }) {
@@ -28,7 +28,7 @@ export default function ReservaItem({ reserva, onPress }) {
           {enCurso && <Text style={styles.enCurso}>En curso</Text>}
         </View>
       </View>
-      <Ionicons name="chevron-forward" size={20} color={colores.ocupado} />
+      <Ionicons name="chevron-forward" size={20} color={colores.textoSuave} />
     </Pressable>
   )
 }
@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
   tarjeta: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colores.blanco, borderRadius: radio, padding: 12, ...sombra },
   presionada: { opacity: 0.85 },
   fecha: { width: 72, paddingVertical: 8, borderRadius: radio - 4, backgroundColor: colores.primarioSuave, alignItems: 'center' },
-  dia: { fontSize: 12, fontWeight: '600', color: colores.primario, textAlign: 'center' },
-  hora: { fontSize: 18, fontWeight: '700', color: colores.primario },
+  dia: { ...tipografia.etiquetaChica, color: colores.primario, textAlign: 'center' },
+  hora: { ...tipografia.tituloGrande, fontSize: 18, color: colores.primario, fontVariant: ['tabular-nums'] },
   cuerpo: { flex: 1, gap: 2 },
-  nombre: { fontSize: 16, fontWeight: '700', color: colores.texto },
-  detalle: { fontSize: 13, color: colores.textoSuave },
+  nombre: { ...tipografia.titulo, fontSize: 16, color: colores.texto },
+  detalle: { ...tipografia.cuerpoChico, color: colores.textoSuave },
   etiquetas: { flexDirection: 'row', gap: 6, marginTop: 4, alignItems: 'center' },
-  enCurso: { fontSize: 12, fontWeight: '600', color: colores.blanco, backgroundColor: colores.exito, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+  enCurso: { ...tipografia.etiquetaChica, color: colores.blanco, backgroundColor: colores.exito, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, overflow: 'hidden' },
 })

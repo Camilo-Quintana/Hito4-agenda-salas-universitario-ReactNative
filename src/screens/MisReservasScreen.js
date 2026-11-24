@@ -19,7 +19,7 @@ export default function MisReservasScreen({ navigation }) {
   useAlVolver(reservas.actualizarSilencioso)
 
   function contenido() {
-    if (reservas.cargando) return <Cargando texto="Cargando tus reservas..." />
+    if (reservas.cargando) return <Cargando texto="Cargando tus reservas…" />
     if (reservas.error) return <MensajeError error={reservas.error} onReintentar={reservas.recargar} />
     return (
       <FlatList
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   pantalla: { flex: 1, backgroundColor: colores.fondo },
   pestanas: { flexDirection: 'row', gap: 8, padding: 12, paddingHorizontal: 16, backgroundColor: colores.blanco, borderBottomWidth: 1, borderBottomColor: colores.borde },
   lista: { padding: 16, paddingBottom: 32, flexGrow: 1 },
-  separador: { height: 10 },
+  separador: { height: 12 },
   botonVacio: { marginTop: 8, minWidth: 180 },
 })

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   subtitulo: { color: colores.acentoClaro, fontSize: 15, textAlign: 'center' },
   tarjeta: { backgroundColor: colores.blanco, borderRadius: radio + 4, padding: 20, gap: 16, ...sombra },
   titulo: { fontSize: 22, fontWeight: '700', color: colores.texto },
-  demo: { alignItems: 'center', paddingVertical: 6 },
+  demo: { alignItems: 'center', justifyContent: 'center', minHeight: 48 },
   textoDemo: { color: colores.primario, fontSize: 14, fontWeight: '600', textDecorationLine: 'underline' },
-  servidor: { color: colores.acentoClaro, fontSize: 12, textAlign: 'center', opacity: 0.8 },
+  servidor: { color: colores.acentoClaro, fontSize: 12, textAlign: 'center' },
 })

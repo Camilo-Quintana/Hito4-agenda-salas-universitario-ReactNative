@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import Boton from './Boton'
 import { colores, radio } from '../theme'
 
-export function Cargando({ texto = 'Cargando...' }) {
+export function Cargando({ texto = 'Cargando…' }) {
   return (
     <View style={styles.centro} accessibilityLiveRegion="polite">
       <ActivityIndicator size="large" color={colores.primario} />
