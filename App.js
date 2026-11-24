@@ -1,17 +1,16 @@
-// ReservaUNAB móvil: segundo cliente de la API REST del Hito 3 (en construcción)
+// ReservaUNAB móvil: segundo cliente de la API REST del Hito 3 (Hito 4, React Native con Expo)
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { ProveedorSesion } from './src/context/SesionContext'
+import Navegacion from './src/navigation/Navegacion'
 
 export default function App() {
   return (
-    <View style={styles.pantalla}>
-      <Text style={styles.titulo}>ReservaUNAB</Text>
-      <StatusBar style="light" />
-    </View>
+    <SafeAreaProvider>
+      <ProveedorSesion>
+        <Navegacion />
+        <StatusBar style="light" />
+      </ProveedorSesion>
+    </SafeAreaProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  pantalla: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#7a1128' },
-  titulo: { color: '#ffffff', fontSize: 28, fontWeight: '800' },
-})
