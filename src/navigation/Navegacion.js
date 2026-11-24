@@ -12,6 +12,7 @@ import { colores } from '../theme'
 import IngresarScreen from '../screens/IngresarScreen'
 import EspaciosScreen from '../screens/EspaciosScreen'
 import DetalleEspacioScreen from '../screens/DetalleEspacioScreen'
+import ReservarScreen from '../screens/ReservarScreen'
 import PerfilScreen from '../screens/PerfilScreen'
 
 const Pila = createNativeStackNavigator()
@@ -63,6 +64,7 @@ export default function Navegacion() {
           <>
             <Pila.Screen name="Pestanas" component={PestanasPrincipales} options={{ headerShown: false }} />
             <Pila.Screen name="DetalleEspacio" component={DetalleEspacioScreen} options={{ title: 'Espacio' }} />
+            <Pila.Screen name="Reservar" component={ReservarScreen} options={{ title: 'Nueva reserva' }} />
           </>
         ) : (
           <Pila.Screen name="Ingresar" component={IngresarScreen} options={{ headerShown: false }} />
